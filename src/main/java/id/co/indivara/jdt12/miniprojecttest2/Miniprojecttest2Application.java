@@ -8,6 +8,7 @@ public class Miniprojecttest2Application {
 
 	public static void main(String[] args) {
 		System.out.println("nyoba lagi");
+		System.out.println("coba lagi");
 		SpringApplication.run(Miniprojecttest2Application.class, args);
 	}
 
