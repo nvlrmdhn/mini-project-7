@@ -26,6 +26,7 @@ public class TransferSupplyController {
 
     @PostMapping("/insert/{warehouseId}/{merchandiseId}")
     public ResponseEntity<TransferSupply> insertSupply(@PathVariable Warehouse warehouseId,@PathVariable Merchandise merchandiseId,  @RequestBody TransferSupply transferSupply){
+        System.out.println("anjay");
         TransferSupply transferSupply1 =warehouseRepository.findById(warehouseId.getWarehouseId()).map(warehouse -> {
             Merchandise merchandise = merchandiseRepository.findById(merchandiseId.getMerchandiseId()).get();
             transferSupply.setTrxSupplyId("T" + (transferSupplyRepository.count()+1));
