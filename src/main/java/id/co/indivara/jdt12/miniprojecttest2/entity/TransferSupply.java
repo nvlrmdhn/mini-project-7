@@ -1,5 +1,6 @@
 package id.co.indivara.jdt12.miniprojecttest2.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,10 +22,12 @@ public class TransferSupply {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchandise_id")
+    @JsonIgnore
     private Merchandise merchandise;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "destination")
+    @JsonIgnore
     private Warehouse warehouse;
 
     @Column(name = "stock")
