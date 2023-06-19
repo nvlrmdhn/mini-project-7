@@ -15,7 +15,7 @@ public class WarehouseInventoryController {
     @Autowired
     WarehouseInventoryRepository warehouseInventoryRepository;
 
-    @GetMapping("/all")
+    @GetMapping("/all/warehouse")
     public List<WarehouseInventory> viewWarehouseInventory() {
         return warehouseInventoryRepository.findAll();
     }
