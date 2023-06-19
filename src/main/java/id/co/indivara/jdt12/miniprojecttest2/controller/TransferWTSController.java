@@ -17,13 +17,7 @@ public class TransferWTSController{
     StoreInventoryRepository storeInventoryRepository;
 
     @Autowired
-    StoreRepository storeRepository;
-
-    @Autowired
     WarehouseInventoryRepository warehouseInventoryRepository;
-
-    @Autowired
-    WarehouseRepository warehouseRepository;
 
     @Autowired
     TransferWTSRepository transferWTSRepository;

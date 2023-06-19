@@ -1,6 +1,7 @@
 package id.co.indivara.jdt12.miniprojecttest2.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,12 +24,12 @@ public class WarehouseInventory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "warehouse_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Warehouse warehouseId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "merchandise_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Merchandise merchandiseId;
 
     @Column(name = "stock")
