@@ -28,7 +28,7 @@ public class TransferWTSController{
         StoreInventory storeDestination = storeInventoryRepository.findByMerchandiseIdAndStoreId(merchandiseId,storeId);
         StoreInventory storeInventory = new StoreInventory();
 
-        transferWTS.setTransferWTSId("T" + transferWTSRepository.count()+1);
+        transferWTS.setTransferWTSId("T" + (transferWTSRepository.count()+1));
         transferWTS.setMerchandiseId(merchandiseId);
         transferWTS.setSource(warehouseId);
         transferWTS.setDestination(storeId);

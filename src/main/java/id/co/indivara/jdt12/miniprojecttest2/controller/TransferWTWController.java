@@ -34,7 +34,7 @@ public class TransferWTWController {
         WarehouseInventory warehouseDestination = warehouseInventoryRepository.findByMerchandiseIdAndWarehouseId(merchandiseId,warehouseIdDestiny);
         WarehouseInventory warehouseInventory = new WarehouseInventory();
 
-        transferwtw.setTransferWTWId("T" + transferWTWRepository.count()+1);
+        transferwtw.setTransferWTWId("T" + (transferWTWRepository.count()+1));
         transferwtw.setWarehouseIdDestination(warehouseIdDestiny);
         transferwtw.setWarehouseIdSource(warehouseIdSource);
         transferwtw.setMerchandiseId(merchandiseId);
