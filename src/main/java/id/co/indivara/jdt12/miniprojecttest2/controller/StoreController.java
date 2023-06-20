@@ -21,7 +21,7 @@ public class StoreController {
         str.setStoreId("str"+(storeRepository.count()+1));
         str.setStoreName(store.getStoreName());
         str.setStoreLocation(store.getStoreLocation());
-        str.setJoindate(Timestamp.valueOf(LocalDateTime.now()));
+        str.setJoinDate(Timestamp.valueOf(LocalDateTime.now()));
         return storeRepository.save(str);
     }
 
@@ -52,10 +52,8 @@ public class StoreController {
         return store1;
     }
 
-    @DeleteMapping("/delete/{storeId}")
+    @DeleteMapping("/delete/store/{storeId}")
     public void deleteStore(@PathVariable String storeId){
         storeRepository.deleteById(storeId);
     }
-
-
 }

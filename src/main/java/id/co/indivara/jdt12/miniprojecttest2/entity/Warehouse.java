@@ -30,5 +30,5 @@ public class Warehouse {
     private String warehouseLocation;
 
     @Column(name = "join_date",nullable = false)
-    private Timestamp joindate;
+    private Timestamp joinDate;
 }

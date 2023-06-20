@@ -20,15 +20,15 @@ import java.sql.Timestamp;
 public class Store {
 
     @Id
-    @Column(name = "store_id",nullable = false)
+    @Column(name = "store_id")
     private String storeId;
 
-    @Column(name = "store_name",nullable = false)
+    @Column(name = "store_name")
     private String storeName;
 
-    @Column(name = "store_location",nullable = false)
+    @Column(name = "store_location")
     private String storeLocation;
 
-    @Column(name = "join_date",nullable = false)
-    private Timestamp joindate;
+    @Column(name = "join_date")
+    private Timestamp joinDate;
 }
