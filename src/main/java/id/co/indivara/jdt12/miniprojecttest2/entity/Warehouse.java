@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -19,12 +20,15 @@ import javax.persistence.Table;
 public class Warehouse {
 
     @Id
-    @Column(name = "warehouse_id")
+    @Column(name = "warehouse_id",nullable = false)
     private String warehouseId;
 
-    @Column(name = "warehouse_name")
+    @Column(name = "warehouse_name",nullable = false)
     private String warehouseName;
 
-    @Column(name = "warehouse_location")
+    @Column(name = "warehouse_location",nullable = false)
     private String warehouseLocation;
+
+    @Column(name = "join_date",nullable = false)
+    private Timestamp joindate;
 }

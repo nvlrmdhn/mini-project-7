@@ -1,13 +1,7 @@
 package id.co.indivara.jdt12.miniprojecttest2.controller;
 
-import id.co.indivara.jdt12.miniprojecttest2.entity.Merchandise;
-import id.co.indivara.jdt12.miniprojecttest2.entity.TransferWTW;
-import id.co.indivara.jdt12.miniprojecttest2.entity.Warehouse;
-import id.co.indivara.jdt12.miniprojecttest2.entity.WarehouseInventory;
-import id.co.indivara.jdt12.miniprojecttest2.repo.MerchandiseRepository;
-import id.co.indivara.jdt12.miniprojecttest2.repo.TransferWTWRepository;
-import id.co.indivara.jdt12.miniprojecttest2.repo.WarehouseInventoryRepository;
-import id.co.indivara.jdt12.miniprojecttest2.repo.WarehouseRepository;
+import id.co.indivara.jdt12.miniprojecttest2.entity.*;
+import id.co.indivara.jdt12.miniprojecttest2.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +10,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @RestController
 public class TransferWTWController {
-
-    @Autowired
-    WarehouseRepository warehouseRepository;
     @Autowired
     WarehouseInventoryRepository warehouseInventoryRepository;
     @Autowired
-    MerchandiseRepository merchandiseRepository;
-    @Autowired
     TransferWTWRepository transferWTWRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
 
     @PostMapping("/transferwtw/{warehouseIdSource}/{merchandiseId}/{warehouseIdDestiny}")
     public ResponseEntity<TransferWTW> transferWTW(@PathVariable Warehouse warehouseIdSource, @PathVariable Merchandise merchandiseId,@PathVariable Warehouse warehouseIdDestiny, @RequestBody TransferWTW transferwtw) {
@@ -39,7 +33,14 @@ public class TransferWTWController {
         transferwtw.setWarehouseIdSource(warehouseIdSource);
         transferwtw.setMerchandiseId(merchandiseId);
         transferwtw.setStock(transferwtw.getStock());
+        transferwtw.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         transferWTWRepository.save(transferwtw);
+
+        Transaction transaction = new Transaction();
+        transaction.setTransactionId("trx"+(transactionRepository.count()+1));
+        transaction.setType("trx_wtw");
+        transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        transactionRepository.save(transaction);
 
         if (warehouseSource.getStock()>= transferwtw.getStock()){
             warehouseSource.setStock(warehouseSource.getStock()- transferwtw.getStock());

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize;
 import java.awt.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -19,25 +20,27 @@ import java.awt.*;
 public class TransferWTS {
 
     @Id
-    @Column(name = "transfer_wts_id")
+    @Column(name = "transfer_wts_id",nullable = false)
     private String transferWTSId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "merchandise_id")
+    @JoinColumn(name = "merchandise_id",nullable = false)
     @JsonIgnore
     private Merchandise merchandiseId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "source")
+    @JoinColumn(name = "source",nullable = false)
     @JsonIgnore
     private Warehouse source;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "destination")
+    @JoinColumn(name = "destination",nullable = false)
     @JsonIgnore
     private Store destination;
 
-    @Column(name = "stock")
+    @Column(name = "stock",nullable = false)
     private Integer stock;
 
+    @Column(name = "timestamp",nullable = false)
+    private Timestamp timestamp;
 }

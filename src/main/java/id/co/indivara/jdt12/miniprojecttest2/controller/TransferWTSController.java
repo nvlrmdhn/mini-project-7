@@ -10,17 +10,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @RestController
 public class TransferWTSController{
 
     @Autowired
     StoreInventoryRepository storeInventoryRepository;
-
     @Autowired
     WarehouseInventoryRepository warehouseInventoryRepository;
-
     @Autowired
     TransferWTSRepository transferWTSRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
 
     @PostMapping("/transferwts/{warehouseId}/{merchandiseId}/{storeId}")
     public ResponseEntity<TransferWTS> transferWTS(@PathVariable Warehouse warehouseId, @PathVariable Merchandise merchandiseId, @PathVariable Store storeId, @RequestBody TransferWTS transferWTS){
@@ -32,7 +35,14 @@ public class TransferWTSController{
         transferWTS.setMerchandiseId(merchandiseId);
         transferWTS.setSource(warehouseId);
         transferWTS.setDestination(storeId);
+        transferWTS.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
         transferWTSRepository.save(transferWTS);
+
+        Transaction transaction = new Transaction();
+        transaction.setTransactionId("trx"+(transactionRepository.count()+1));
+        transaction.setType("trx_wts");
+        transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        transactionRepository.save(transaction);
 
         if (warehouseSource.getStock()>=transferWTS.getStock()){
             warehouseSource.setStock(warehouseSource.getStock()- transferWTS.getStock());

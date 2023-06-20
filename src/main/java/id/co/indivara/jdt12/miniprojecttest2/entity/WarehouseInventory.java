@@ -23,15 +23,15 @@ public class WarehouseInventory {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "warehouse_id")
+    @JoinColumn(name = "warehouse_id",nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Warehouse warehouseId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "merchandise_id")
+    @JoinColumn(name = "merchandise_id",nullable = false)
     @JsonIgnoreProperties({"hibernateLazyInitializer"})
     private Merchandise merchandiseId;
 
-    @Column(name = "stock")
+    @Column(name = "stock",nullable = false)
     private Integer stock;
 }

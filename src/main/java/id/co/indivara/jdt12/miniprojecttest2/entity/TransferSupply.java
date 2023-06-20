@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -32,6 +33,9 @@ public class TransferSupply {
 
     @Column(name = "stock")
     private Integer stock;
+
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
 
 
 }

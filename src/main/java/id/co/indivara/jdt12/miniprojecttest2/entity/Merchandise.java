@@ -19,9 +19,9 @@ import javax.persistence.Table;
 public class Merchandise {
 
     @Id
-    @Column(name = "merchandise_id")
+    @Column(name = "merchandise_id",nullable = false)
     private String merchandiseId;
 
-    @Column(name = "merchandise_name")
+    @Column(name = "merchandise_name",nullable = false)
     private String merchandiseName;
 }

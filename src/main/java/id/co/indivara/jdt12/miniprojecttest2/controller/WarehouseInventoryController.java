@@ -1,7 +1,5 @@
 package id.co.indivara.jdt12.miniprojecttest2.controller;
 
-import id.co.indivara.jdt12.miniprojecttest2.entity.Merchandise;
-import id.co.indivara.jdt12.miniprojecttest2.entity.Warehouse;
 import id.co.indivara.jdt12.miniprojecttest2.entity.WarehouseInventory;
 import id.co.indivara.jdt12.miniprojecttest2.repo.WarehouseInventoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
