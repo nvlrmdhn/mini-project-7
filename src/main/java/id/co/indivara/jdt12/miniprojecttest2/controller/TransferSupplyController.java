@@ -10,42 +10,43 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @RestController
 public class TransferSupplyController {
-
-    @Autowired
-    MerchandiseRepository merchandiseRepository;
     @Autowired
     TransactionRepository transactionRepository;
     @Autowired
     TransferSupplyRepository transferSupplyRepository;
     @Autowired
-    WarehouseRepository warehouseRepository;
-    @Autowired
     WarehouseInventoryRepository warehouseInventoryRepository;
 
     @PostMapping("/insert/{warehouseId}/{merchandiseId}")
     public ResponseEntity<TransferSupply> insertSupply(@PathVariable Warehouse warehouseId,@PathVariable Merchandise merchandiseId,  @RequestBody TransferSupply transferSupply){
-        TransferSupply transferSupply1 =warehouseRepository.findById(warehouseId.getWarehouseId()).map(warehouse -> {
-            Merchandise merchandise = merchandiseRepository.findById(merchandiseId.getMerchandiseId()).get();
+            WarehouseInventory warehouseInventory = warehouseInventoryRepository.findByMerchandiseIdAndWarehouseId(merchandiseId,warehouseId);
             transferSupply.setTrxSupplyId("T" + (transferSupplyRepository.count()+1));
-            transferSupply.setMerchandise(merchandise);
+            transferSupply.setMerchandise(merchandiseId);
             transferSupply.setWarehouse(warehouseId);
-            WarehouseInventory warehouseInventory = new WarehouseInventory();
+            transferSupply.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+
+            Transaction transaction = new Transaction();
+            transaction.setTransactionId("trx"+(transactionRepository.count()+1));
+            transaction.setType("trx_supply");
+            transaction.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+            transactionRepository.save(transaction);
+            WarehouseInventory warehouseInventory1 = new WarehouseInventory();
+
             try {
-                WarehouseInventory warehouseInventory1 =warehouseInventoryRepository.findByMerchandiseIdAndWarehouseId(merchandiseId,warehouseId);
+                warehouseInventory.setStock(warehouseInventory.getStock()+transferSupply.getStock());
+                warehouseInventoryRepository.save(warehouseInventory);
+            }catch (Exception ex){
                 warehouseInventory1.setMerchandiseId(merchandiseId);
                 warehouseInventory1.setWarehouseId(warehouseId);
-                warehouseInventory1.setStock(warehouseInventory1.getStock()+transferSupply.getStock());
+                warehouseInventory1.setStock(transferSupply.getStock());
                 warehouseInventoryRepository.save(warehouseInventory1);
-            }catch (Exception ex){
-                warehouseInventory.setMerchandiseId(merchandiseId);
-                warehouseInventory.setWarehouseId(warehouseId);
-                warehouseInventory.setStock(transferSupply.getStock());
-                warehouseInventoryRepository.save(warehouseInventory);
             }
-            return transferSupplyRepository.save(transferSupply);
-        }).orElseThrow(()-> new RuntimeException("uwogh"));
-        return new ResponseEntity<>(transferSupply1, HttpStatus.OK);
+            transferSupplyRepository.save(transferSupply);
+            return new ResponseEntity<>(transferSupply,HttpStatus.OK);
     }
 }

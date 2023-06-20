@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Data
@@ -16,9 +17,12 @@ import javax.persistence.*;
 public class Transaction {
 
     @Id
-    @Column(name = "transaction_id")
+    @Column(name = "transaction_id",nullable = false)
     private String transactionId;
 
-    @Column(name = "type")
+    @Column(name = "type",nullable = false)
     private String type;
+
+    @Column(name = "timestamp",nullable = false)
+    private Timestamp timestamp;
 }
