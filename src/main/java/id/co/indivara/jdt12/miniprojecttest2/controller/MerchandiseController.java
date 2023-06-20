@@ -31,7 +31,7 @@ public class MerchandiseController {
         return merchandiseRepository.findAll();
     }
 
-    @DeleteMapping("/delete/merchandise/{merchendiseId}")
+    @DeleteMapping("/delete/merchandise/{merchandiseId}")
     public void deleteMerchandise(@PathVariable String merchandiseId){
         merchandiseRepository.deleteById(merchandiseId);
     }

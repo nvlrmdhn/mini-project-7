@@ -19,7 +19,7 @@ public class WarehouseController {
     @PostMapping("/create/warehouse")
     public Warehouse createWarehouse(@RequestBody Warehouse warehouse){
         warehouse.setWarehouseId("wrh"+(warehouseRepository.count()+1));
-        warehouse.setJoindate(Timestamp.valueOf(LocalDateTime.now()));
+        warehouse.setJoinDate(Timestamp.valueOf(LocalDateTime.now()));
         return warehouseRepository.save(warehouse);
     }
 
