@@ -2,7 +2,8 @@ package id.co.indivara.jdt12.miniprojecttest2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import id.co.indivara.jdt12.miniprojecttest2.entity.Store;
-import id.co.indivara.jdt12.miniprojecttest2.repo.StoreRepository;
+import id.co.indivara.jdt12.miniprojecttest2.entity.Warehouse;
+import id.co.indivara.jdt12.miniprojecttest2.repo.WarehouseRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,38 +17,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class StoreControllerTest {
+public class WarehouseControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private StoreRepository storeRepository;
-    @Test
-    public void storeCreateTest() throws Exception {
+    WarehouseRepository warehouseRepository;
 
-        Store store = new Store();
-        store.setStoreName("Store Noval");
-        store.setStoreLocation("Bekasi");
+    @Test
+    public void warehouseCreateTest() throws Exception {
+
+        Warehouse warehouse = new Warehouse();
+        warehouse.setWarehouseName("Warehouse Noval");
+        warehouse.setWarehouseLocation("Bekasi");
 
         mockMvc.perform(
-                        post("/create/store")
+                        post("/create/warehouse")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(store)))
+                                .content(objectMapper.writeValueAsString(warehouse)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.storeId").exists())
-                .andExpect(jsonPath("$.storeLocation").value("Bekasi"))
-                .andExpect(jsonPath("$.storeName").value("Store Noval"))
+                .andExpect(jsonPath("$.warehouseId").exists())
+                .andExpect(jsonPath("$.warehouseLocation").value("Bekasi"))
+                .andExpect(jsonPath("$.warehouseName").value("Warehouse Noval"))
                 .andExpect(jsonPath("$.joinDate").exists());
     }
 
     @Test
     public void storeDeleteTest() throws Exception{
 
-        mockMvc.perform(delete("/delete/store/{storeId}","str5"))
+        mockMvc.perform(delete("/delete/warehouse/{warehouseId}","wrh4"))
                 .andExpect(status().isOk());
-        assertFalse(storeRepository.existsById("str5"));
+        assertFalse(warehouseRepository.existsById("wrh4"));
     }
+
 }
